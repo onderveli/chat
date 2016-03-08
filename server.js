@@ -1,8 +1,8 @@
+var cool = require('cool-ascii-faces');
 var express = require('express');
 var app = express();
 
-var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080;
-var ipaddress   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
+app.set('port', (process.env.PORT || 8080));
 
 
 app.get('/', function (req, res) {
@@ -18,9 +18,6 @@ var serverim = app.listen(port, ipaddress, function () {
 });
 
 var io = require('socket.io').listen(serverim);
-
-
-
 
 io.sockets.on('connection', function (socket) {
     socket.on('solOk', function (data) {
