@@ -1,8 +1,5 @@
-var app = express();
-app.use(express.cookieParser());  
-app.use(express.bodyParser());  
-app.use(express.methodOverride());  
-app.use(express.session({ secret: "secret" }));  
+var express = require('express'),
+	app = express();
 
 var port = process.env.PORT || 8080;
 
