@@ -1,0 +1,63 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	
+	<meta charset="UTF-8">
+	<title>Responsive Slider Yapımı (DEMO) - Bilişimcafe.Net</title>
+	<link rel="stylesheet" href="http://demo.yazilimciakli.com/demo/SliderApp/upload/style.css" />
+	<script type="text/javascript" src="http://demo.yazilimciakli.com/demo/SliderApp/upload/scripts/jquery.js"></script>
+	<script type="text/javascript" src="http://demo.yazilimciakli.com/demo/SliderApp/upload/scripts/slider.js"></script>
+	
+</head>
+<body>
+<div id="list"></div>
+	<div class="slider">
+		<a href="#" class="onceki"><</a>
+		<a href="#" class="sonraki">></a>
+		<ul class="slider_liste">
+			<li>
+				<a href="#">
+					<img src="http://demo.yazilimciakli.com/demo/SliderApp/upload/images/resim.png" alt=""/>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="http://demo.yazilimciakli.com/demo/SliderApp/upload/images/resim2.png" alt=""/>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="http://demo.yazilimciakli.com/demo/SliderApp/upload/images/resim3.png" alt=""/>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="http://demo.yazilimciakli.com/demo/SliderApp/upload/images/resim4.png" alt=""/>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<img src="http://demo.yazilimciakli.com/demo/SliderApp/upload/images/resim5.png" alt=""/>
+				</a>
+			</li>
+		</ul>
+	</div>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+window.onload = function() {
+
+    var messages = [];
+    var socket =new io.connect('http://chatheroku.herokuapp.com/');
+    socket.on('SolOk', function (data) {
+		$(".onceki").click();
+    });
+	socket.on('SagOk', function (data) {
+		$(".sonraki").click();
+    });
+
+}
+	</script>
+
+</body>
+</html>
