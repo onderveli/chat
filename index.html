@@ -49,7 +49,7 @@
 window.onload = function() {
 
     var messages = [];
-    var socket =new io.connect('http://slider-onderveli.rhcloud.com/');
+    var socket =new io.connect('http://chatheroku.herokuapp.com/');
     socket.on('SolOk', function (data) {
 		$('#log').append('onceki');
 		$(".onceki").click();
