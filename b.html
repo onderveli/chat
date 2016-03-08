@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	
+	<meta charset="UTF-8">
+	<title>Yazılımcı Aklı</title>
+    <style>
+	body
+	{
+		margin:0;
+		padding:0;
+	}
+	#onceki,#sonraki
+	{
+		float:left;
+		width:50%;
+		background-color:#000;
+		color:#FFF;
+		text-align:center;
+		text-decoration:none;
+		font-weight:bold;
+		font-size:120px;
+	}
+	#onceki:hover,#sonraki:hover
+	{
+		background-color:#333;
+	}
+	</style>
+	
+</head>
+<body>
+
+	<div class="slider">
+		<a href="#" id="onceki"><</a>
+		<a href="#" id="sonraki">></a>
+	</div>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+
+window.onload = function() {
+$("#onceki").css("height",screen.height);
+$("#sonraki").css("height",screen.height);
+$("#sonraki").css("line-height",screen.height+"px");
+$("#onceki").css("line-height",screen.height+"px");
+    var socket =new io.connect('http://slider-onderveli.rhcloud.com/');
+    var solOk = document.getElementById("onceki");
+	var sagOk = document.getElementById("sonraki");
+
+    solOk.onclick = sendMessage = function() {
+        socket.emit('solOk','SolOk')
+    }
+	sagOk.onclick = sendMessage = function() {
+        socket.emit('sagOk','SagOk')
+    }
+}
+	</script>
+</body>
+</html>
