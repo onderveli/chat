@@ -1,26 +1,20 @@
-var cool = require('cool-ascii-faces');
 var express = require('express');
 var app = express();
 
-app.set('port', (process.env.PORT || 8080));
+app.set('port', (process.env.PORT || 5000));
 
+app.use(express.static(__dirname + '/index.html'));
 
-app.get('/', function (req, res) {
-  res.sendfile(__dirname + '/index.html');//Ana Dizine yönlendir
+// views is directory for all template files
+app.set('b', __dirname + '/b.html');
+app.set('view engine', 'ejs');
+
+app.get('/', function(request, response) {
+  response.render('index.html');
 });
 
-app.get('/b', function(req, res) {
-   res.sendfile(__dirname + '/b.html');//Ana Dizine yönlendir
-});
-
-var serverim = app.listen(port, ipaddress, function () {
-  console.log('Example app listening on port 3000!');
-});
-
-var io = require('socket.io').listen(serverim);
-
-io.sockets.on('connection', function (socket) {
-    socket.on('solOk', function (data) {
+app.listen(app.get('port'), function() {
+      socket.on('solOk', function (data) {
 		console.log('SolOk');
         io.sockets.emit('SolOk', data);
     });
@@ -29,4 +23,7 @@ io.sockets.on('connection', function (socket) {
         io.sockets.emit('SagOk', data);
     });
 });
+
+
+
 
