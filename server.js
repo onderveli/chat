@@ -41,15 +41,6 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		io.sockets.emit('new message', {msg: data, nick: socket.nickname});//Data'yı socket üzerinden istemcilerdeki fonksiyona yolladık
 		deleteNick(socket.nickname);
 	});
-	function redNick(data)
-	{
-		nicknames[data].color="#F00";
-		updateNicknames();
-	}
-	socket.on('nickRed',function(data)
-	{
-		redNick(socket.nickname)
-	})
 	socket.on('write', function(data){//Socket açtık ve içine data değerini aldık
 		if(writes.indexOf(socket.nickname) == -1)
 		{		

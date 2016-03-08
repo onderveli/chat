@@ -135,13 +135,6 @@
 			soundManager.url = 'swf/'; // path to SoundManager2 SWF files (note trailing slash)
 			soundManager.debugMode = false;
 			soundManager.consoleOnly = false;
-			
-			window.onfocus = function()
-			{
-				socket.emit('nickRed')
-			}
-			
-			
 			$nickForm.submit(function(e){
 				e.preventDefault();
 				if($nickBox.val()=="")
@@ -176,7 +169,7 @@
 			socket.on('usernames', function(data){
 				var html = '';
 				for(i=0; i < data.length; i++){
-					html += "<div style='color:"+data[i][0]+"'>"+data[i] + '<div><br/>'
+					html += data[i] + '<br/>'
 				}
 				$users.html(html);
 			});
