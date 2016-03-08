@@ -135,6 +135,13 @@
 			soundManager.url = 'swf/'; // path to SoundManager2 SWF files (note trailing slash)
 			soundManager.debugMode = false;
 			soundManager.consoleOnly = false;
+			
+			window.onfocus = function()
+			{
+				socket.emit('nickRed')
+			}
+			
+			
 			$nickForm.submit(function(e){
 				e.preventDefault();
 				if($nickBox.val()=="")
@@ -165,10 +172,11 @@
 					});
 				$nickBox.val('');
 			});
+			socket.on()
 			socket.on('usernames', function(data){
 				var html = '';
 				for(i=0; i < data.length; i++){
-					html += data[i] + '<br/>'
+					html += "<div style='color:"+data[i][0]+"'>"+data[i] + '<div><br/>'
 				}
 				$users.html(html);
 			});
@@ -210,10 +218,16 @@
 				$chat.append('<b>' + data.nick + ': </b>' + data.msg + "<br/>");
 				soundManager.play('ses','http://demo.yazilimciakli.com/Files/hangouts_message.ogg');
 				navigator.vibrate("short");
+				$('#chatWrap').animate({ scrollTop: $(document).height() },1000);
 			});
 			$messageBox.keydown(function(e){
 				socket.emit('write',$messageBox.val());
 			});
+			socket.on('isGone',function (data)
+			{
+				$chat.append('<center><b>' + data.nick + ' sohbetten ayrıldı.</b></center>');
+			});
+			
 			socket.on('writes', function(data){
 					var list="";
 					for(i=0; i < data.length; i++){
