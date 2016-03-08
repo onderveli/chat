@@ -1,63 +1,228 @@
-<!DOCTYPE HTML>
-<html lang="en-US">
+<html>
 <head>
-	
-	<meta charset="UTF-8">
-	<title>Responsive Slider Yapımı (DEMO) - Bilişimcafe.Net</title>
-	<link rel="stylesheet" href="http://demo.yazilimciakli.com/SliderApp/upload/style.css" />
-	<script type="text/javascript" src="http://demo.yazilimciakli.com/SliderApp/upload/scripts/jquery.js"></script>
-	<script type="text/javascript" src="http://demo.yazilimciakli.com/SliderApp/upload/scripts/slider.js"></script>
-	
+	<title>Yazılımcı Aklı Chat Uygulaması</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+	<style>
+	body
+	{
+		background-color:#000;
+		color:#8AC007;
+	}
+		#chat{
+			height:auto;
+		}
+		#contentWrap{
+			display: none;
+		}
+		#chatWrap{
+			float: left;
+			border: 5px #8AC007 solid;
+			width:82%;
+			overflow:scroll;
+			  min-height: 87%;
+		height: auto !important;
+		height: 87%;
+		max-height: 87%;
+		}
+		#setNick
+		{
+			    position: absolute;
+				bottom: 0px;
+				width: 95%;
+				height: 50px;
+				border: 3px solid #8AC007;
+		}
+		#setNick input[type='text']
+		{
+			height:44px;
+			padding:5px;
+			border:none;
+			width:80%;
+			float:left;
+		}
+		#setNick input[type='submit']
+		{
+			float:left;
+			height:44px;
+			padding:5px;
+			border:none;
+			width:20%;
+		}
+		#users
+		{
+			float:left;
+			width:15%;
+			border: 3px solid #8AC007;
+		}
+		#send-message
+		{
+			display:none;
+			width:95%;
+			border-top: 3px solid #8AC007;
+			position: absolute;
+				bottom: 0px;
+				height: 50px;
+				border: 3px solid #8AC007;
+		}
+		#message
+		{
+			height:44px;
+			padding:5px;
+			border:none;
+			width:80%;
+			float:left;
+		}
+		#button
+		{
+			float:left;
+			height:44px;
+			padding:5px;
+			border:none;
+			width:20%;
+		}
+		#global
+		{
+			width:95%;
+			margin:10px auto;
+		}
+	</style>
 </head>
 <body>
-<div id="list"></div>
-	<div class="slider">
-		<a href="#" class="onceki"><</a>
-		<a href="#" class="sonraki">></a>
-		<ul class="slider_liste">
-			<li>
-				<a href="#">
-					<img src="http://demo.yazilimciakli.com/SliderApp/upload/images/resim.png" alt=""/>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<img src="http://demo.yazilimciakli.com/SliderApp/upload/images/resim2.png" alt=""/>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<img src="http://demo.yazilimciakli.com/SliderApp/upload/images/resim3.png" alt=""/>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<img src="http://demo.yazilimciakli.com/SliderApp/upload/images/resim4.png" alt=""/>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<img src="http://demo.yazilimciakli.com/SliderApp/upload/images/resim5.png" alt=""/>
-				</a>
-			</li>
-		</ul>
+<div id="global">
+	<div id="nickWrap">
+		<p id="nickError"></p>
+		<form id="setNick">
+			<input size="35" id="nickname" placeholder="Kullanıcı Adı Giriniz" autocomplete="off" type="text">
+			<input type="submit" value="Giriş Yap">
+            
+	  </form>
 	</div>
+
+	<div id="contentWrap">
+		<div id="chatWrap">
+			<div id="chat"></div>
+            <div id="write"></div>
+
+		</div>
+		<div id="users"></div>
+	</div>
+			<form id="send-message">
+				<input size="35" id="message" autocomplete="off"></input>
+				<input type="submit" value="Gönder" id="button"></input>
+			</form>
+            <button id="boslt">Diziyi Boşalt</button>
+            <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/soundmanager2.js"></script>
+             <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/jquery.vibrate.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
-window.onload = function() {
-
-    var messages = [];
-    var socket =new io.connect('http://chatheroku.herokuapp.com/');
-    socket.on('SolOk', function (data) {
-		$(".onceki").click();
-    });
-	socket.on('SagOk', function (data) {
-		$(".sonraki").click();
-    });
-
-}
+	function mistake()
+	{
+		
+	}
+		jQuery(function($){
+			var socket =new io.connect('http://chat-onderveli.rhcloud.com/');
+			var $nickForm = $('#setNick');
+			var $nickError = $('#nickError');
+			var $nickBox = $('#nickname');
+			var $users = $('#users');
+			var $messageForm = $('#send-message');
+			var $messageBox = $('#message');
+			var $chat = $('#chat');
+			var $write = $('#write');
+			soundManager.url = 'swf/'; // path to SoundManager2 SWF files (note trailing slash)
+			soundManager.debugMode = false;
+			soundManager.consoleOnly = false;
+			$nickForm.submit(function(e){
+				e.preventDefault();
+				if($nickBox.val()=="")
+				{
+												$nickError.html('Kullanıcı Adı Boş Olamaz');
+							document.getElementById("setNick").style.borderColor = "red";
+							setTimeout(function(){
+								document.getElementById("setNick").style.borderColor = "#8AC007";
+							 }, 3000);
+							 soundManager.play('ses','http://demo.yazilimciakli.com/Files/beep-09.wav');
+							navigator.vibrate("long");
+				}
+				else
+					socket.emit('new user', $nickBox.val(), function(data){
+						if(data){
+							$('#nickWrap').hide();
+							$('#contentWrap').show();
+							$messageForm.show();
+						} else{
+							$nickError.html('Bu kullanıcı adı zaten var! Başka bir isim deneyin');
+							document.getElementById("setNick").style.borderColor = "red";
+							setTimeout(function(){
+								document.getElementById("setNick").style.borderColor = "#8AC007";
+							 }, 3000);
+							 soundManager.play('ses','http://demo.yazilimciakli.com/Files/beep-09.wav');
+							navigator.vibrate("long");
+						}
+					});
+				$nickBox.val('');
+			});
+			socket.on('usernames', function(data){
+				var html = '';
+				for(i=0; i < data.length; i++){
+					html += data[i] + '<br/>'
+				}
+				$users.html(html);
+			});
+			socket.on('deleteNick', function(data){
+					var list="";
+					for(i=0; i < data.length; i++){
+						list += data[i]+","
+					}
+					if(list=="" || list==null || list.trim()=="" || list.trim()==null)
+					{
+						$write.html('');
+					}
+					else
+					{
+						$write.html(list+" yazıyor");
+					}
+			});
+			$messageForm.submit(function(e){
+				e.preventDefault();
+				if($messageBox.val()==null || $messageBox.val()=="")
+				{
+					soundManager.play('ses','http://demo.yazilimciakli.com/Files/beep-09.wav');
+					navigator.vibrate("long");
+					document.getElementById("send-message").style.borderColor = "#C00";
+					setTimeout(function(){
+						document.getElementById("send-message").style.borderColor = "#8AC007";
+						 }, 3000);
+					
+				}
+				else
+				{
+					socket.emit('send message', $messageBox.val());
+					$messageBox.val('');
+				}
+				$('#chatWrap').animate({ scrollTop: $(document).height() },1000);
+			});
+			
+			socket.on('new message', function(data){
+				$chat.append('<b>' + data.nick + ': </b>' + data.msg + "<br/>");
+				soundManager.play('ses','http://demo.yazilimciakli.com/Files/hangouts_message.ogg');
+				navigator.vibrate("short");
+			});
+			$messageBox.keydown(function(e){
+				socket.emit('write',$messageBox.val());
+			});
+			socket.on('writes', function(data){
+					var list="";
+					for(i=0; i < data.length; i++){
+						list += data[i]+","
+					} 
+					$write.html(list+" yazıyor");
+			});
+		});
 	</script>
-
+    </div>
 </body>
 </html>
