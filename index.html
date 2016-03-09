@@ -81,6 +81,7 @@
 			padding:5px;
 			border:none;
 			width:20%;
+			
 		}
 		#global
 		{
@@ -168,8 +169,8 @@
 			socket.on()
 			socket.on('usernames', function(data){
 				var html = '';
-				for(i=0; i < data.length; i++){
-					html += data[i] + '<br/>'
+				for(i=0; i < data.length/2; i++){
+					html += "<div style='color:"+data[i*2+1]+"'>"+data[i]+'</div><br/>'
 				}
 				$users.html(html);
 			});

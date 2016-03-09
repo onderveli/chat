@@ -2,6 +2,7 @@ var express = require('express'),
 	app = express();
 
 var nicknames = [];//kullanıcı listesi
+var color=[];
 var	writes=[];//yazıyor listesi
 var port = process.env.PORT || 8080;
 
@@ -20,13 +21,15 @@ consol.log(nicknames);
 		} else{
 			callback(true);
 			socket.nickname = data;
-			nicknames.push({name:socket.nickname,color:"#asd"});
+			nicknames.push(socket.nickname);
+			color.push("#C00");
 			updateNicknames();
 		}
 	});
 	
 	function updateNicknames(){
-		io.sockets.emit('usernames', nicknames);
+		var dizi=nicknames.concat(color);
+		io.sockets.emit('usernames', dizi);
 	}
 	function isGone()
 	{
