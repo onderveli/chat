@@ -220,6 +220,7 @@
 			window.onfocus = function()
 			{
 				socket.emit('colorChange');
+				alert('ds');
 			}
 			socket.on('writes', function(data){
 					var list="";
