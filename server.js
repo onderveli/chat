@@ -62,7 +62,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 			deleteNick(socket.nickname);
 		}
 	});
-	socket.on('colorChange',function()
+	socket.on('colorChange',function(data)
 	{
 		var a = nicknames.indexOf(socket.nickname);
 		Update(color[a],"#999");
