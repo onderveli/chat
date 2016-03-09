@@ -166,7 +166,7 @@
 			socket.on('usernames', function(data){
 				var html = '';
 				for(i=0; i < data.length/2; i++){
-					html += "<div style='color:"+data[i*2+1]+"'>"+data[i]+'</div><br/>'
+					html += "<div style='color:"+data[i*2]+"'>"+data[i]+'</div><br/>'
 				}
 				$users.html(html);
 			});
