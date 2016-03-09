@@ -67,14 +67,17 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		var index = nicknames.indexOf(socket.nickname);
 		
 		color[index] = "#09F";
-		console.log(color)
 		updateNicknames();
 		
 	});
 	socket.on('disconnect', function(data){
 		isGone();
+		var index = nicknames.indexOf(socket.nickname);
+		color.splice(color[index], 1);
 		if(!socket.nickname) return;
-		nicknames.splice(nicknames.indexOf({name:socket.nickname}), 1);
+		nicknames.splice(nicknames.indexOf(socket.nickname), 1);
+	
+		
 		updateNicknames();
 		
 	});
