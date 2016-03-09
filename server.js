@@ -29,6 +29,15 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		var dizi=nicknames.concat(color);
 		io.sockets.emit('usernames', dizi);
 	}
+	function Update(key, value)
+	{    
+		for(var i=0;i<array.length;i++){
+		if(array[i].Key==key){
+			array[i].Value=value; 
+			break;
+		}
+		}
+	}
 	function isGone()
 	{
 		io.sockets.emit('isGone', nicknames);
@@ -52,6 +61,13 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		{
 			deleteNick(socket.nickname);
 		}
+	});
+	socket.on('colorChange',function()
+	{
+		var a = nicknames.indexOf(socket.nickname);
+		Update(color[a],"#999");
+		updateNicknames();
+		
 	});
 	socket.on('disconnect', function(data){
 		if(!socket.nickname) return;

@@ -119,10 +119,6 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
-	function mistake()
-	{
-		
-	}
 		jQuery(function($){
 			var socket =new io.connect('http://chatheroku.herokuapp.com/');
 			var $nickForm = $('#setNick');
@@ -221,7 +217,10 @@
 			{
 				$chat.append('<center><b>' + data.nick + ' sohbetten ayrıldı.</b></center>');
 			});
-			
+			window.onfocus = function()
+			{
+				socket.emit('colorChange');
+			}
 			socket.on('writes', function(data){
 					var list="";
 					for(i=0; i < data.length; i++){
