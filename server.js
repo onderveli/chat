@@ -19,8 +19,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		} else{
 			callback(true);
 			socket.nickname = data;
-			socket.color = "#8AC007";
-			nicknames.push(socket.nickname,socket.color);
+			nicknames.push({name:socket.nickname,color:"#asd"});
 			updateNicknames();
 		}
 	});
@@ -54,9 +53,10 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	});
 	socket.on('disconnect', function(data){
 		if(!socket.nickname) return;
-		nicknames.splice(nicknames.indexOf(socket.nickname), 1);
-		updateNicknames();
 		isGone();
+		nicknames.splice(nicknames.indexOf({name:socket.nickname}), 1);
+		updateNicknames();
+		
 	});
 });
 
