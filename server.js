@@ -72,8 +72,8 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		
 	});
 	socket.on('disconnect', function(data){
-		if(!socket.nickname) return;
 		isGone();
+		if(!socket.nickname) return;
 		nicknames.splice(nicknames.indexOf({name:socket.nickname}), 1);
 		updateNicknames();
 		
