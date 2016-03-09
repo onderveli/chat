@@ -31,9 +31,9 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	}
 	function Update(key, value)
 	{    
-		for(var i=0;i<array.length;i++){
-		if(array[i].Key==key){
-			array[i].Value=value; 
+		for(var i=0;i<color.length;i++){
+		if(color[i].Key==key){
+			color[i].Value=value; 
 			break;
 		}
 		}
