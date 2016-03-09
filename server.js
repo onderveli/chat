@@ -13,7 +13,6 @@ app.get('/', function(req, res){
 });
 
 io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
-consol.log(nicknames);
 	socket.on('new user', function(data, callback){
 		
 		if (nicknames.indexOf(data) != -1){
