@@ -55,8 +55,9 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	});
 	socket.on('colorChange',function(data)
 	{
-		var index = color.indexOf(socket.nickname);
-		if (~index) {
+		var index = nicknames.indexOf(socket.nickname);
+		console.log(index)
+		if (index) {
 			color[index] = "#999";
 		}
 		updateNicknames();
