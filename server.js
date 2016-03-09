@@ -20,7 +20,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 			callback(true);
 			socket.nickname = data;
 			nicknames.push(socket.nickname);
-			color.push("#C00");
+			color.push("#09F");
 			updateNicknames();
 		}
 	});
@@ -58,6 +58,15 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		var index = nicknames.indexOf(socket.nickname);
 		
 		color[index] = "#999";
+		console.log(color)
+		updateNicknames();
+		
+	});
+		socket.on('colorChange2',function(data)
+	{
+		var index = nicknames.indexOf(socket.nickname);
+		
+		color[index] = "#09F";
 		console.log(color)
 		updateNicknames();
 		

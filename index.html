@@ -221,6 +221,10 @@
 			{
 				socket.emit('colorChange');
 			}
+			window.onblur = function()
+			{
+				socket.emit('colorChange2');
+			}
 			socket.on('writes', function(data){
 					var list="";
 					for(i=0; i < data.length; i++){
