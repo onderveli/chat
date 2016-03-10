@@ -26,8 +26,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	});
 	
 	function updateNicknames(){
-		var dizi=nicknames.concat(color);
-		io.sockets.emit('usernames', dizi);
+		io.sockets.emit('usernames', {color: color, nick: nicknames});
 	}
 	function isGone()
 	{

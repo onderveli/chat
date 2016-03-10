@@ -168,15 +168,15 @@
 				for(i=0; i < (data.length/2); i++){
 					if(i==0)
 					{
-						html += "<div style='color:"+data[2]+"'>"+data[i]+'</div><br/>'
+						html += "<div style='color:"+data.color[2]+"'>"+data.nick[i]+'</div><br/>'
 					}
 					else if((data.length)==2)
 					{
-						html += "<div style='color:"+data[1]+"'>"+data[i]+'</div><br/>'
+						html += "<div style='color:"+data.color[1]+"'>"+data.nick[i]+'</div><br/>'
 					}
 					else
 					{
-						html += "<div style='color:"+data[i*2]+"'>"+data[i]+'</div><br/>'
+						html += "<div style='color:"+data.color[i]+"'>"+data.nick[i]+'</div><br/>'
 					}
 					
 				}
