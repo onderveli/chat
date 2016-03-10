@@ -29,7 +29,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		for(i=0;nicknames.length;i++)
 		{
 			io.sockets.emit('usernames', {color: color[i], nick: nicknames[i]});
-			console.log({color: color[i], nick: nicknames[i]});
+			console.log(color[i]);
 		}
 	} 
 	function isGone()
