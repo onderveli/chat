@@ -65,7 +65,6 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		socket.on('colorChange2',function(data)
 	{
 		var index = nicknames.indexOf(socket.nickname);
-		
 		color[index] = "#09F";
 		updateNicknames();
 		
@@ -76,8 +75,6 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		color.splice(color[index], 1);
 		if(!socket.nickname) return;
 		nicknames.splice(nicknames.indexOf(socket.nickname), 1);
-	
-		
 		updateNicknames();
 		
 	});
