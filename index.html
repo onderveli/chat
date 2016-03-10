@@ -165,21 +165,7 @@
 			socket.on()
 			socket.on('usernames', function(data){
 				var html = '';
-				for(i=0; i < (data.length/2); i++){
-					if(i==0)
-					{
-						html += "<div style='color:"+data.color[2]+"'>"+data.nick[i]+'</div><br/>'
-					}
-					else if((data.length)==2)
-					{
-						html += "<div style='color:"+data.color[1]+"'>"+data.nick[i]+'</div><br/>'
-					}
-					else
-					{
-						html += "<div style='color:"+data.color[i]+"'>"+data.nick[i]+'</div><br/>'
-					}
-					
-				}
+				html += "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>'
 				$users.html(html);
 			});
 			socket.on('deleteNick', function(data){
