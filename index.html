@@ -136,7 +136,7 @@
 				e.preventDefault();
 				if($nickBox.val()=="")
 				{
-												$nickError.html('Kullanıcı Adı Boş Olamaz');
+							$nickError.html('Kullanıcı Adı Boş Olamaz');
 							document.getElementById("setNick").style.borderColor = "red";
 							setTimeout(function(){
 								document.getElementById("setNick").style.borderColor = "#8AC007";
@@ -164,9 +164,9 @@
 			});
 			socket.on()
 			socket.on('usernames', function(data){
-				var html = '';
-				html += "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>'
-				$users.html(html);
+				var html;
+				html = "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>'
+				$users.append(html);
 			});
 			socket.on('deleteNick', function(data){
 					var list="";
