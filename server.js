@@ -26,19 +26,9 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	});
 	
 	function updateNicknames(){
-		var num=0;
 		for(i=0; i <= nicknames.length ;i++)
 		{
-			if(i < nicknames.length)
-			{
-				num=0;
-			}
-			else
-			{
-				num=1;
-			}
-			var tweet = {color: color[i], nick: nicknames[i], status : num};
-			console.log(tweet)
+			var tweet = {color: color[i], nick: nicknames[i]};
 			io.sockets.emit('usernames', tweet);
 		}
 	} 
