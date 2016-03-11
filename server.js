@@ -29,6 +29,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		for(i=0; i < nicknames.length ;i++)
 		{
 			var tweet = {color: color[i], nick: nicknames[i]};
+			console.log(tweet)
 			io.sockets.emit('usernames', tweet);
 		}
 	} 
