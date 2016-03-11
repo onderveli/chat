@@ -30,7 +30,6 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		{
 			var tweet = {color: color[i], nick: nicknames[i]};
 			io.sockets.emit('usernames', tweet);
-			console.log(tweet);
 		}
 	} 
 	function isGone()
@@ -57,7 +56,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 			deleteNick(socket.nickname);
 		}
 	});
-	socket.on('colorChange',function(data)
+	socket.on('colorChange2',function(data)
 	{
 		var index = nicknames.indexOf(socket.nickname);
 		
@@ -66,7 +65,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		updateNicknames();
 		
 	});
-		socket.on('colorChange2',function(data)
+		socket.on('colorChange',function(data)
 	{
 		var index = nicknames.indexOf(socket.nickname);
 		color[index] = "#09F";
