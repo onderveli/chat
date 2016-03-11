@@ -165,8 +165,12 @@
 			socket.on()
 			socket.on('usernames', function(data){
 				var html;
-				html = "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>'
-				$users.append(html);
+				html += "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
+				if(data.status==1)
+				{
+					$users.append(html);
+				}
+				
 			});
 			socket.on('deleteNick', function(data){
 					var list="";
