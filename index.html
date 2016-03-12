@@ -117,10 +117,6 @@
 				<input size="35" id="message" autocomplete="off"></input>
 				<input type="submit" value="Gönder" id="button"></input>
 			</form>
-<form method="post" id="uploadForm" enctype="multipart/form-data" action="/upload">
-    <input type="file" name="thumbnail">
-    <input type="submit">
-</form>
             <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/soundmanager2.js"></script>
              <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/jquery.vibrate.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -171,11 +167,11 @@
 					});
 				$nickBox.val('');
 			});
-			socket.on()
+			var html;
 			socket.on('usernames', function(data){
-				var html;
-				html += "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
-				$users.html(html);
+				
+				html = "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
+				$users.text(html);
 			});
 			socket.on('deleteNick', function(data){
 					var list="";

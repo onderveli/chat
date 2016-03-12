@@ -1,12 +1,6 @@
 var express = require('express'),
 	app = express();
-app.use(express.logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded());
-app.use(express.multipart({ uploadDir: __dirname + '/uploads', limit: '50mb' }));
-app.use(express.methodOverride());
-app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+
 var nicknames = [];//kullanıcı listesi
 var color=[];
 var	writes=[];//yazıyor listesi
@@ -14,10 +8,7 @@ var port = process.env.PORT || 8080;
 
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
 
-app.post('/upload', function(req, res) {
-  console.log(req.files.file.name + ' has been uploaded');
-  res.send(200);
-});
+
 
 
 app.get('/', function(req, res){
@@ -39,7 +30,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	});
 	
 	function updateNicknames(){
-		for(i=0; i <= nicknames.length ;i++)
+		for(i=0; i < nicknames.length ;i++)
 		{
 			var tweet = {color: color[i], nick: nicknames[i]};
 			io.sockets.emit('usernames', tweet);
