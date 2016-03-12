@@ -1,0 +1,15 @@
+{ 
+  userPhoto:
+  { 
+     fieldname: 'userPhoto',
+     originalname: 'banner.png',
+     name: 'banner1415699779303.png',
+     encoding: '7bit',
+     mimetype: 'image/png',
+     path: 'uploads&#92;banner1415699779303.png',
+     extension: 'png',
+     size: 11800,
+     truncated: false,
+     buffer: null 
+ } 
+}
