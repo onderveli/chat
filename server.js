@@ -10,10 +10,6 @@ var	writes=[];//yazıyor listesi
 var port = process.env.PORT || 8080;
 
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
-
-app.get('/', function(req, res){
-	res.sendfile(__dirname + '/index.html');//Ana Dizine yönlendir
-});
 app.use(bodyParser({defer: true}));
  app.route('/upload')
  .post(function (req, res, next) {
@@ -43,6 +39,10 @@ app.use(bodyParser({defer: true}));
 		  io.sockets.emit('new message', {msg: err, nick: socket.nickname});
     });
 });
+app.get('/', function(req, res){
+	res.sendfile(__dirname + '/index.html');//Ana Dizine yönlendir
+});
+
 io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 
 	socket.on('new user', function(data, callback){
