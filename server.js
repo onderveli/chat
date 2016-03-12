@@ -20,7 +20,7 @@ app.use(bodyParser({defer: true}));
 
   var form = new formidable.IncomingForm();
     //Formidable uploads to operating systems tmp dir by default
-    form.uploadDir = "./img";       //set upload directory
+    form.uploadDir = "img";       //set upload directory
     form.keepExtensions = true;     //keep file extension
 
     form.parse(req, function(err, fields, files) {
