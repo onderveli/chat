@@ -36,12 +36,12 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 			if(i==nicknames.length)
 			{
 				a=1;
+				console.log(a);
 				io.sockets.emit('usernames', a);
 			}
 			else
 			{
-				var tweet = {color: color[i], nick: nicknames[i],status: a};
-				console.log(tweet)
+				var tweet = {color: color[i], nick: nicknames[i]};
 				io.sockets.emit('usernames', tweet);
 			}
 		}
