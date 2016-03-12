@@ -1,27 +1,32 @@
 var express = require('express'),
 	app = express();
-var multer  =   require('multer');
 var nicknames = [];//kullanıcı listesi
 var color=[];
 var	writes=[];//yazıyor listesi
 var port = process.env.PORT || 8080;
 
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
-var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, './img');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
-  }
+
+app.use(express.bodyParser({uploadDir:'./uploads'}));
+
+app.post('/file-upload', function(req, res, next) {
+    console.log(req.body);
+    console.log(req.files);
 });
-var upload = multer({ storage : storage}).single('userPhoto');
-app.post('/img',function(req,res){
-    upload(req,res,function(err) {
-        if(err) {
-            return res.end("Error uploading file.");
-        }
-        io.socket.emit('new message', {msg: res, nick: socket.nickname});
+var fs = require('fs');
+app.post('/file-upload', function(req, res) {
+    // get the temporary location of the file
+    var tmp_path = req.files.thumbnail.path;
+    // set where the file should actually exists - in this case it is in the "images" directory
+    var target_path = './img/' + req.files.thumbnail.name;
+    // move the file from the temporary location to the intended location
+    fs.rename(tmp_path, target_path, function(err) {
+        if (err) throw err;
+        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
+        fs.unlink(tmp_path, function() {
+            if (err) throw err;
+            res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
+        });
     });
 });
 app.get('/', function(req, res){
