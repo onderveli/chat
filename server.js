@@ -1,5 +1,6 @@
 var express = require('express'),
 	app = express();
+var fs = require('fs');
 var nicknames = [];//kullanıcı listesi
 var color=[];
 var	writes=[];//yazıyor listesi
@@ -13,7 +14,7 @@ app.post('/file-upload', function(req, res, next) {
     console.log(req.body);
     console.log(req.files);
 });
-var fs = require('fs');
+
 app.post('/file-upload', function(req, res) {
     // get the temporary location of the file
     var tmp_path = req.files.thumbnail.path;
