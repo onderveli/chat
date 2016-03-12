@@ -167,10 +167,12 @@
 					});
 				$nickBox.val('');
 			});
-			var html;
+			
 			socket.on('usernames', function(data){
+				var html;
 				if(data==1)
 				{
+					
 					$users.html(html);
 				}
 				else
