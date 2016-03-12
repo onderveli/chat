@@ -169,10 +169,15 @@
 			});
 			var html;
 			socket.on('usernames', function(data){
-				
-				html = "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
-				$users.append(html);
-			});
+				if(data.status==1)
+				{
+					$users.html(html);
+				}
+				else
+				{
+					html += "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
+				}
+							});
 			socket.on('deleteNick', function(data){
 					var list="";
 					for(i=0; i < data.length; i++){
