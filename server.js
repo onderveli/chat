@@ -1,6 +1,12 @@
 var express = require('express'),
 	app = express();
-var fs = require('fs');
+app.use(express.logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded());
+app.use(express.multipart({ uploadDir: __dirname + '/uploads', limit: '50mb' }));
+app.use(express.methodOverride());
+app.use(app.router);
+app.use(express.static(path.join(__dirname, 'public')));
 var nicknames = [];//kullanıcı listesi
 var color=[];
 var	writes=[];//yazıyor listesi
@@ -8,28 +14,12 @@ var port = process.env.PORT || 8080;
 
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
 
-app.use(express.bodyParser({uploadDir:'./uploads'}));
-
-app.post('/file-upload', function(req, res, next) {
-    console.log(req.body);
-    console.log(req.files);
+app.post('/upload', function(req, res) {
+  console.log(req.files.file.name + ' has been uploaded');
+  res.send(200);
 });
 
-app.post('/file-upload', function(req, res) {
-    // get the temporary location of the file
-    var tmp_path = req.files.thumbnail.path;
-    // set where the file should actually exists - in this case it is in the "images" directory
-    var target_path = './img/' + req.files.thumbnail.name;
-    // move the file from the temporary location to the intended location
-    fs.rename(tmp_path, target_path, function(err) {
-        if (err) throw err;
-        // delete the temporary file, so that the explicitly set temporary upload dir does not get filled with unwanted files
-        fs.unlink(tmp_path, function() {
-            if (err) throw err;
-            res.send('File uploaded to: ' + target_path + ' - ' + req.files.thumbnail.size + ' bytes');
-        });
-    });
-});
+
 app.get('/', function(req, res){
 	res.sendfile(__dirname + '/index.html');//Ana Dizine yönlendir
 });
