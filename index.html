@@ -66,6 +66,10 @@
 				height: 50px;
 				border: 3px solid #8AC007;
 		}
+		#uploadForm
+		{
+			display:none;
+		}
 		#message
 		{
 			height:44px;
@@ -113,7 +117,14 @@
 				<input size="35" id="message" autocomplete="off"></input>
 				<input type="submit" value="Gönder" id="button"></input>
 			</form>
-
+            <form id =  "uploadForm"
+     enctype   =  "multipart/form-data"
+     action    =  "upload"
+     method    =  "post"
+>
+<input type="file" name="userPhoto" />
+<input type="submit" value="Upload Image" name="submit">
+</form>
             <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/soundmanager2.js"></script>
              <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/jquery.vibrate.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -128,6 +139,7 @@
 			var $messageForm = $('#send-message');
 			var $messageBox = $('#message');
 			var $chat = $('#chat');
+			var $uploadForm = $('#uploadForm');
 			var $write = $('#write');
 			soundManager.url = 'swf/'; // path to SoundManager2 SWF files (note trailing slash)
 			soundManager.debugMode = false;
@@ -149,6 +161,7 @@
 						if(data){
 							$('#nickWrap').hide();
 							$('#contentWrap').show();
+							$('#uploadForm').show();
 							$messageForm.show();
 						} else{
 							$nickError.html('Bu kullanıcı adı zaten var! Başka bir isim deneyin');
