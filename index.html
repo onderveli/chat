@@ -171,7 +171,7 @@
 			socket.on('usernames', function(data){
 				
 				html = "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
-				$users.text(html);
+				$users.append(html);
 			});
 			socket.on('deleteNick', function(data){
 					var list="";
