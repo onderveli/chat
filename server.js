@@ -14,7 +14,6 @@ var io = require('socket.io').listen(app.listen(port)); // this tells socket.io 
 app.get('/', function(req, res){
 	res.sendfile(__dirname + '/index.html');//Ana Dizine yönlendir
 });
-io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 app.use(bodyParser({defer: true}));
  app.route('/upload')
  .post(function (req, res, next) {
@@ -44,6 +43,8 @@ app.use(bodyParser({defer: true}));
 		  io.sockets.emit('new message', {msg: err, nick: socket.nickname});
     });
 });
+io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
+
 	socket.on('new user', function(data, callback){
 		if (nicknames.indexOf(data) != -1){
 			callback(false);
