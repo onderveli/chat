@@ -1,42 +1,27 @@
 var express = require('express'),
 	app = express();
-var bodyParser = require('body-parser'); //connects bodyParsing middleware
-var formidable = require('formidable');
-var path = require('path');     //used for file path
-var fs =require('fs-extra');    //File System-needed for renaming file etc
+var multer  =   require('multer');
 var nicknames = [];//kullanıcı listesi
 var color=[];
 var	writes=[];//yazıyor listesi
 var port = process.env.PORT || 8080;
 
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
-app.use(bodyParser({defer: true}));
- app.route('/upload')
- app.post(function (req, res, next) {
-
-  var form = new formidable.IncomingForm();
-    //Formidable uploads to operating systems tmp dir by default
-    form.uploadDir = "/img";       //set upload directory
-    form.keepExtensions = true;     //keep file extension
-
-    form.parse(req, function(err, fields, files) {
-        res.writeHead(200, {'content-type': 'text/plain'});
-        res.write('received upload:\n\n');
-        console.log("form.bytesReceived");
-        //TESTING
-        console.log("file size: "+JSON.stringify(files.fileUploaded.size));
-        console.log("file path: "+JSON.stringify(files.fileUploaded.path));
-        console.log("file name: "+JSON.stringify(files.fileUploaded.name));
-        console.log("file type: "+JSON.stringify(files.fileUploaded.type));
-        console.log("astModifiedDate: "+JSON.stringify(files.fileUploaded.lastModifiedDate));
-		
-        fs.rename(files.fileUploaded.path, 'img/'+files.fileUploaded.name, function(err) {
-        if (err)
-            throw err;
-          console.log('renamed complete');  
-        });
-          res.end();
-		  io.sockets.emit('new message', {msg: err, nick: socket.nickname});
+var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, './uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
+  }
+});
+var upload = multer({ storage : storage}).single('userPhoto');
+app.post('/img',function(req,res){
+    upload(req,res,function(err) {
+        if(err) {
+            return res.end("Error uploading file.");
+        }
+        io.socket.emit('new message', {msg: res, nick: socket.nickname});
     });
 });
 app.get('/', function(req, res){

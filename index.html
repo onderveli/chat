@@ -117,9 +117,13 @@
 				<input size="35" id="message" autocomplete="off"></input>
 				<input type="submit" value="Gönder" id="button"></input>
 			</form>
-        <form method='post' id="uploadForm" onSubmit="false" action='upload' enctype="multipart/form-data">
-        <input type='file' name='fileUploaded'>
-        <input type='submit'>
+<form id        =  "uploadForm"
+     enctype   =  "multipart/form-data"
+     action    =  "/img"
+     method    =  "post"
+>
+<input type="file" name="userPhoto" />
+<input type="submit" value="Upload Image" name="submit">
 </form>
             <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/soundmanager2.js"></script>
              <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/jquery.vibrate.js"></script>
