@@ -36,9 +36,14 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 			if(i==nicknames.length)
 			{
 				a=1;
+				io.sockets.emit('usernames', a);
 			}
-			var tweet = {color: color[i], nick: nicknames[i],status: a};
-			io.sockets.emit('usernames', tweet);
+			else
+			{
+				var tweet = {color: color[i], nick: nicknames[i],status: a};
+				console.log(tweet)
+				io.sockets.emit('usernames', tweet);
+			}
 		}
 	} 
 	function isGone()
