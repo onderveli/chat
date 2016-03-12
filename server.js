@@ -9,7 +9,7 @@ var port = process.env.PORT || 8080;
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
 var storage =   multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, './uploads');
+    callback(null, './img');
   },
   filename: function (req, file, callback) {
     callback(null, file.fieldname + '-' + Date.now());
