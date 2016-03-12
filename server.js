@@ -12,7 +12,7 @@ var port = process.env.PORT || 8080;
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
 app.use(bodyParser({defer: true}));
  app.route('/upload')
- .post(function (req, res, next) {
+ app.post(function (req, res, next) {
 
   var form = new formidable.IncomingForm();
     //Formidable uploads to operating systems tmp dir by default
