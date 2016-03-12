@@ -1,6 +1,9 @@
 var express = require('express'),
 	app = express();
-
+var bodyParser = require('body-parser'); //connects bodyParsing middleware
+var formidable = require('formidable');
+var path = require('path');     //used for file path
+var fs =require('fs-extra');    //File System-needed for renaming file etc
 var nicknames = [];//kullanıcı listesi
 var color=[];
 var	writes=[];//yazıyor listesi
@@ -11,23 +14,36 @@ var io = require('socket.io').listen(app.listen(port)); // this tells socket.io 
 app.get('/', function(req, res){
 	res.sendfile(__dirname + '/index.html');//Ana Dizine yönlendir
 });
-app.route('/upload')
-    .post(function (req, res, next) {
+app.use(bodyParser({defer: true}));
+ app.route('/upload')
+ .post(function (req, res, next) {
 
-        var fstream;
-        req.pipe(req.busboy);
-        req.busboy.on('file', function (fieldname, file, filename) {
-            console.log("Uploading: " + filename);
+  var form = new formidable.IncomingForm();
+    //Formidable uploads to operating systems tmp dir by default
+    form.uploadDir = "./img";       //set upload directory
+    form.keepExtensions = true;     //keep file extension
 
-            //Path where image will be uploaded
-            fstream = fs.createWriteStream(__dirname + '/img/' + filename);
-            file.pipe(fstream);
-            fstream.on('close', function () {    
-                console.log("Upload Finished of " + filename);              
-                res.redirect('back');           //where to go next
-            });
+    form.parse(req, function(err, fields, files) {
+        res.writeHead(200, {'content-type': 'text/plain'});
+        res.write('received upload:\n\n');
+        console.log("form.bytesReceived");
+        //TESTING
+        console.log("file size: "+JSON.stringify(files.fileUploaded.size));
+        console.log("file path: "+JSON.stringify(files.fileUploaded.path));
+        console.log("file name: "+JSON.stringify(files.fileUploaded.name));
+        console.log("file type: "+JSON.stringify(files.fileUploaded.type));
+        console.log("astModifiedDate: "+JSON.stringify(files.fileUploaded.lastModifiedDate));
+
+        //Formidable changes the name of the uploaded file
+        //Rename the file to its original name
+        fs.rename(files.fileUploaded.path, './img/'+files.fileUploaded.name, function(err) {
+        if (err)
+            throw err;
+          console.log('renamed complete');  
         });
+          res.end();
     });
+});
 io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	socket.on('new user', function(data, callback){
 		if (nicknames.indexOf(data) != -1){
