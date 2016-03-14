@@ -21,10 +21,9 @@
 			border: 5px #8AC007 solid;
 			width:82%;
 			overflow:scroll;
-			  min-height: 87%;
-		height: auto !important;
-		height: 87%;
-		max-height: 87%;
+			  min-height: 80%;
+		height: 80% !important;
+		max-height: 80%;
 		}
 		#setNick
 		{
@@ -69,6 +68,7 @@
 		#uploadForm
 		{
 			display:none;
+			width:100%;
 		}
 		#message
 		{
@@ -112,13 +112,22 @@
 
 		</div>
 		<div id="users"></div>
+            <form id="uploadForm"
+          enctype="multipart/form-data"
+          action="/upload"
+          method="post">
+      <input type="file" name="userPhoto" />
+      <input type="submit" value="Upload Image" name="submit">
+      <span id = "status"></span>
+    </form>
 	</div>
+
 			<form id="send-message">
 				<input size="35" id="message" autocomplete="off"></input>
 				<input type="submit" value="Gönder" id="button"></input>
 			</form>
-            <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/soundmanager2.js"></script>
-             <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/jquery.vibrate.js"></script>
+                  
+    <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/soundmanager2.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
@@ -133,6 +142,7 @@
 			var $chat = $('#chat');
 			var $uploadForm = $('#uploadForm');
 			var $write = $('#write');
+			var html;
 			soundManager.url = 'swf/'; // path to SoundManager2 SWF files (note trailing slash)
 			soundManager.debugMode = false;
 			soundManager.consoleOnly = false;
@@ -146,7 +156,7 @@
 								document.getElementById("setNick").style.borderColor = "#8AC007";
 							 }, 3000);
 							 soundManager.play('ses','http://demo.yazilimciakli.com/Files/beep-09.wav');
-							navigator.vibrate("long");
+							
 				}
 				else
 					socket.emit('new user', $nickBox.val(), function(data){
@@ -162,24 +172,22 @@
 								document.getElementById("setNick").style.borderColor = "#8AC007";
 							 }, 3000);
 							 soundManager.play('ses','http://demo.yazilimciakli.com/Files/beep-09.wav');
-							navigator.vibrate("long");
-						}
+													}
 					});
 				$nickBox.val('');
 			});
 			
 			socket.on('usernames', function(data){
-				var html;
-				if(data==1)
+							html = "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
+							$users.html(html);
+			});
+			socket.on('temizle', function(data){
+				if(data.msg==0)
 				{
-					
-					$users.html(html);
+					console.log('burada');
+					$users.html("");
 				}
-				else
-				{
-					html += "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
-				}
-							});
+			});
 			socket.on('deleteNick', function(data){
 					var list="";
 					for(i=0; i < data.length; i++){
@@ -199,7 +207,7 @@
 				if($messageBox.val()==null || $messageBox.val()=="")
 				{
 					soundManager.play('ses','http://demo.yazilimciakli.com/Files/beep-09.wav');
-					navigator.vibrate("long");
+					
 					document.getElementById("send-message").style.borderColor = "#C00";
 					setTimeout(function(){
 						document.getElementById("send-message").style.borderColor = "#8AC007";
@@ -217,7 +225,7 @@
 			socket.on('new message', function(data){
 				$chat.append('<b>' + data.nick + ': </b>' + data.msg + "<br/>");
 				soundManager.play('ses','http://demo.yazilimciakli.com/Files/hangouts_message.ogg');
-				navigator.vibrate("short");
+				
 				$('#chatWrap').animate({ scrollTop: $(document).height() },1000);
 			});
 			$messageBox.keydown(function(e){
