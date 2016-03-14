@@ -181,13 +181,6 @@
 							html = "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
 							$users.html(html);
 			});
-			socket.on('temizle', function(data){
-				if(data.msg==0)
-				{
-					console.log('burada');
-					$users.html("");
-				}
-			});
 			socket.on('deleteNick', function(data){
 					var list="";
 					for(i=0; i < data.length; i++){

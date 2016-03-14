@@ -27,7 +27,6 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	});
 	
 	function updateNicknames(){
-		io.sockets.emit('temizle',{msg: 0});
 		var tweet;
 		for(i=0; i < nicknames.length ;i++)
 		{
