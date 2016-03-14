@@ -1,11 +1,14 @@
-var express = require('express');
-var app = express();
+var express = require('express'),
+	app = express();
 
 var nicknames = [];//kullanıcı listesi
+var color=[];
 var	writes=[];//yazıyor listesi
 var port = process.env.PORT || 8080;
 
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
+
+
 
 
 app.get('/', function(req, res){
@@ -21,17 +24,26 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 			callback(true);
 			socket.nickname = data;
 			nicknames.push(socket.nickname);
-			nicknames[socket.nickname][0]="#09F";
+			color.push("#09F");
 			updateNicknames();
 		}
 	});
 	
 	function updateNicknames(){
-		var tweet;
-		for(i=0; i < nicknames.length ;i++)
+		var a=0;
+		for(i=0; i <= nicknames.length ;i++)
 		{
-			tweet= {color: nicknames[i][0], nick: nicknames[i]}
-			io.sockets.emit('usernames', tweet);	
+			if(i==nicknames.length)
+			{
+				a=1;
+				console.log(a);
+				io.sockets.emit('usernames', a);
+			}
+			else
+			{
+				var tweet = {color: color[i], nick: nicknames[i]};
+				io.sockets.emit('usernames', tweet);
+			}
 		}
 	} 
 	function isGone()
@@ -60,21 +72,28 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	});
 	socket.on('colorChange2',function(data)
 	{
-		nicknames[socket.nickname][0] = "#999";
+		var index = nicknames.indexOf(socket.nickname);
+		
+		color[index] = "#999";
+		console.log(color)
 		updateNicknames();
 		
 	});
 		socket.on('colorChange',function(data)
 	{
-		nicknames[socket.nickname][0] = "#09F";
+		var index = nicknames.indexOf(socket.nickname);
+		color[index] = "#09F";
 		updateNicknames();
 		
 	});
 	socket.on('disconnect', function(data){
 		isGone();
+		var index = nicknames.indexOf(socket.nickname);
+		color.splice(color[index], 1);
 		if(!socket.nickname) return;
 		nicknames.splice(nicknames.indexOf(socket.nickname), 1);
 		updateNicknames();
+		
 	});
 });
 
