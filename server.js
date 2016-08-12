@@ -1,6 +1,6 @@
-var express = require('express'),
-	app = express();
-	mysql= express('mysql');
+var express   =    require("express");
+var mysql     =    require('mysql');
+var app       =    express();
 var nicknames = [];//kullanıcı listesi
 var color=[];
 var	writes=[];//yazıyor listesi
