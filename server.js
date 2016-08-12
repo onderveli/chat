@@ -9,7 +9,7 @@ var port = process.env.PORT || 8080;
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : '46.252.205.141:3306',
+  host     : '46.252.205.141:2083',
   user     : 'chatv23',
   password : '123456',
   database : 'ChatAppV1'
