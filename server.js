@@ -16,13 +16,6 @@ var connection = mysql.createConnection({
 });
 
 connection.connect();
-connection.query('INSERT INTO logs (name,msg) VALUES ("mehmet2","kalaycix2")', function(err, rows, fields) {
-  if (!err)
-	console.log('The solution is: ', rows);
-  else
-	console.log('Error while performing Query.');
-});
-
 
 
 app.get('/', function(req, res){
@@ -72,10 +65,12 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	}
 	socket.on('send message', function(data){//Socket açtık ve içine data değerini aldık
 		io.sockets.emit('new message', {msg: data, nick: socket.nickname});//Data'yı socket üzerinden istemcilerdeki fonksiyona yolladık
-
-
-
-	
+		connection.query('INSERT INTO logs (name,msg) VALUES ("mehmet2","kalaycix2")', function(err, rows, fields) {
+		  if (!err)
+			console.log('The solution is: ', rows);
+		  else
+			console.log('Error while performing Query.');
+		});
 		deleteNick(socket.nickname);
 		updateNicknames();
 	});
