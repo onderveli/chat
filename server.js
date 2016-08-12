@@ -15,14 +15,7 @@ var connection = mysql.createConnection({
   database : 'ChatAppV1'
 });
 
-connection.connect(function(err) {
-  if (err) {
-    console.error('error connecting: ' + err.stack);
-    return;
-  }
- 
-  console.log('connected as id ' + connection.threadId);
-});
+
 
 
 
@@ -31,6 +24,15 @@ app.get('/', function(req, res){
 });
 
 io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
+	
+	connection.connect(function(err) {
+	  if (err) {
+		console.error('error connecting: ' + err.stack);
+		return;
+	  }
+	 
+	  console.log('connected as id ' + connection.threadId);
+	});
 	socket.on('new user', function(data, callback){
 		
 		if (nicknames.indexOf(data) != -1){
