@@ -14,7 +14,9 @@ var connection = mysql.createConnection({
   database : 'ChatAppV1'
 });
 
-connection.connect();
+connection.connect(function(err) {
+  console.log('The solution is: ', err);
+});
 
 
 
