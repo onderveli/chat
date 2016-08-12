@@ -74,7 +74,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	}
 	socket.on('send message', function(data){//Socket açtık ve içine data değerini aldık
 		io.sockets.emit('new message', {msg: data, nick: socket.nickname});//Data'yı socket üzerinden istemcilerdeki fonksiyona yolladık
-		
+		console.log('Kullanıcı Adı:'+socket.nickname+'mesaj:'+data);
 
 		connection.query('INSERT INTO logs (name,msg) VALUES ("'+socket.nickname+'","'+data+'")', function(err, rows, fields) {
 		  if (!err)
