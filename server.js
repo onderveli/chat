@@ -24,9 +24,9 @@ app.get('/', function(req, res){
 });
 
 io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
-
+connection.connect(console.log('mysql baglandi'));
 	socket.on('new user', function(data, callback){
-		connection.connect();
+		
 		if (nicknames.indexOf(data) != -1){
 			callback(false);
 		} else{
