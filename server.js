@@ -15,7 +15,7 @@ var connection = mysql.createConnection({
   database : 'ChatAppV1'
 });
 
-
+connection.connect();
 
 
 
@@ -65,7 +65,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	}
 	socket.on('send message', function(data){//Socket açtık ve içine data değerini aldık
 		io.sockets.emit('new message', {msg: data, nick: socket.nickname});//Data'yı socket üzerinden istemcilerdeki fonksiyona yolladık
-		connection.connect();
+		
 
 		connection.query('INSERT INTO logs (name,msg) VALUES ("'+name+'","'+msg+'")', function(err, rows, fields) {
 		  if (!err)
@@ -74,7 +74,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 			console.log('Error while performing Query.');
 		});
 
-		connection.end();
+	
 		deleteNick(socket.nickname);
 	});
 	socket.on('write', function(data){//Socket açtık ve içine data değerini aldık
@@ -111,7 +111,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		if(!socket.nickname) return;
 		nicknames.splice(nicknames.indexOf(socket.nickname), 1);
 		updateNicknames();
-		
+		connection.end();
 	});
 });
 
