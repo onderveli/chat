@@ -1,12 +1,13 @@
-var express   =    require("express");
-var mysql     =    require('mysql');
-var app       =    express();
+var express = require('express'),
+	app = express();
+
 var nicknames = [];//kullanıcı listesi
 var color=[];
 var	writes=[];//yazıyor listesi
 var port = process.env.PORT || 8080;
 
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
+var mysql      = require('mysql');
 var connection = mysql.createConnection({
   host     : 'https://n1plcpnl0015.prod.ams1.secureserver.net:3306',
   user     : 'chatv23',
@@ -14,9 +15,7 @@ var connection = mysql.createConnection({
   database : 'ChatAppV1'
 });
 
-connection.connect(function(err) {
-  console.log('The solution is: ', err);
-});
+connection.connect();
 
 
 
