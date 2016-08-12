@@ -9,12 +9,13 @@ var port = process.env.PORT || 8080;
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
 var mysql      = require('mysql');
 var connection = mysql.createConnection({
-  host     : 'yazilimciakli.com:3306',
+  host     : 'yazilimciakli.com',
   user     : 'chatv23',
   password : '123456',
   database : 'ChatAppV1'
 });
 
+connection.connect();
 
 
 
@@ -25,14 +26,6 @@ app.get('/', function(req, res){
 
 io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	
-	connection.connect(function(err) {
-	  if (err) {
-		console.error('error connecting: ' + err.stack);
-		return;
-	  }
-	 
-	  console.log('connected as id ' + connection.threadId);
-	});
 	socket.on('new user', function(data, callback){
 		
 		if (nicknames.indexOf(data) != -1){
@@ -74,7 +67,6 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	}
 	socket.on('send message', function(data){//Socket açtık ve içine data değerini aldık
 		io.sockets.emit('new message', {msg: data, nick: socket.nickname});//Data'yı socket üzerinden istemcilerdeki fonksiyona yolladık
-		console.log('Kullanıcı Adı:'+socket.nickname+'mesaj:'+data);
 
 		connection.query('INSERT INTO logs (name,msg) VALUES ("'+socket.nickname+'","'+data+'")', function(err, rows, fields) {
 		  if (!err)
