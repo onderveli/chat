@@ -74,7 +74,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		io.sockets.emit('new message', {msg: data, nick: socket.nickname});//Data'yı socket üzerinden istemcilerdeki fonksiyona yolladık
 		
 
-		connection.query('INSERT INTO logs (name,msg) VALUES ("'+name+'","'+msg+'")', function(err, rows, fields) {
+		connection.query('INSERT INTO logs (name,msg) VALUES ("'+socket.nickname+'","'+data+'")', function(err, rows, fields) {
 		  if (!err)
 			console.log('The solution is: ', rows);
 		  else
@@ -83,6 +83,7 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 
 	
 		deleteNick(socket.nickname);
+		updateNicknames();
 	});
 	socket.on('write', function(data){//Socket açtık ve içine data değerini aldık
 		if(writes.indexOf(socket.nickname) == -1)
