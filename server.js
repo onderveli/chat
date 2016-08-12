@@ -15,7 +15,7 @@ var connection = mysql.createConnection({
   database : 'ChatAppV1'
 });
 
-connection.connect();
+
 
 
 
@@ -26,6 +26,7 @@ app.get('/', function(req, res){
 io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 
 	socket.on('new user', function(data, callback){
+		connection.connect();
 		if (nicknames.indexOf(data) != -1){
 			callback(false);
 		} else{
