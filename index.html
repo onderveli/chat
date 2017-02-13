@@ -174,8 +174,8 @@
 						html += "<div style='color:"+entry.color+"'>"+entry.nick+'</div><br/>';
 					});
 					$users.html(html);
-				}
-							});
+				
+				});
 			socket.on('deleteNick', function(data){
 					var list="";
 					for(i=0; i < data.length; i++){
