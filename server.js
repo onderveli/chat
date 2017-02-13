@@ -8,13 +8,6 @@ var port = process.env.PORT || 8080;
 
 var io = require('socket.io').listen(app.listen(port)); // this tells socket.io to use our express server
 var mysql      = require('mysql');
-var connection = mysql.createConnection({
-  host     : 'yazilimciakli.com',
-  user     : 'chatv23',
-  password : '123456',
-  database : 'ChatAppV1'
-});
-
 
 
 
@@ -65,13 +58,6 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 	}
 	socket.on('send message', function(data){//Socket açtık ve içine data değerini aldık
 		io.sockets.emit('new message', {msg: data, nick: socket.nickname});//Data'yı socket üzerinden istemcilerdeki fonksiyona yolladık
-		connection.query('INSERT INTO logs (name,msg) VALUES ("mehmet2","kalaycix2")', function(err, rows, fields) {
-		  if (!err)
-			console.log('The solution is: ', rows);
-		  else
-			console.log('Error while performing Query.');
-		});
-		deleteNick(socket.nickname);
 		updateNicknames();
 	});
 	socket.on('write', function(data){//Socket açtık ve içine data değerini aldık
