@@ -178,6 +178,7 @@
 				else
 				{
 					html += "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
+					$users.html(html);
 				}
 							});
 			socket.on('deleteNick', function(data){
