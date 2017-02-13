@@ -122,7 +122,7 @@
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		jQuery(function($){
-			var socket =new io.connect('http://chatheroku.herokuapp.com/');
+			var socket =new io.connect('http://chatheroku.herokuapp.com');
 			var $nickForm = $('#setNick');
 			var $nickError = $('#nickError');
 			var $nickBox = $('#nickname');
@@ -168,12 +168,7 @@
 			});
 			
 			socket.on('usernames', function(data){
-				var html;
-					data.forEach(function(entry) {
-						html += "<div style='color:"+entry.color+"'>"+entry.nick+'</div><br/>';
-					});
-					$users.html(html);
-				
+					$users.html(data);	
 				});
 			socket.on('deleteNick', function(data){
 					var list="";

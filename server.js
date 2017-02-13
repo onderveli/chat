@@ -16,7 +16,6 @@ app.get('/', function(req, res){
 });
 
 io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
-	connection.connect();
 	socket.on('new user', function(data, callback){
 		
 		if (nicknames.indexOf(data) != -1){
@@ -25,27 +24,12 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 			callback(true);
 			socket.nickname = data;
 			nicknames.push(socket.nickname);
-			color.push("#09F");
 			updateNicknames();
 		}
 	});
 	
 	function updateNicknames(){
-		var a=0;
-		for(i=0; i <= nicknames.length ;i++)
-		{
-			if(i==nicknames.length)
-			{
-				a=1;
-				console.log(a);
-				io.sockets.emit('usernames', a);
-			}
-			else
-			{
-				var tweet = {color: color[i], nick: nicknames[i]};
-				io.sockets.emit('usernames', tweet);
-			}
-		}
+			io.sockets.emit('usernames', nicknames);
 	} 
 	function isGone()
 	{
@@ -70,22 +54,6 @@ io.sockets.on('connection', function(socket){//Socket ile bağlantı kuruldu.
 		{
 			deleteNick(socket.nickname);
 		}
-	});
-	socket.on('colorChange2',function(data)
-	{
-		var index = nicknames.indexOf(socket.nickname);
-		
-		color[index] = "#999";
-		console.log(color)
-		updateNicknames();
-		
-	});
-		socket.on('colorChange',function(data)
-	{
-		var index = nicknames.indexOf(socket.nickname);
-		color[index] = "#09F";
-		updateNicknames();
-		
 	});
 	socket.on('disconnect', function(data){
 		isGone();
