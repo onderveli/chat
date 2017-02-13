@@ -170,14 +170,9 @@
 			
 			socket.on('usernames', function(data){
 				var html;
-				if(data>=1)
-				{
-					
-					$users.html(html);
-				}
-				else
-				{
-					html += "<div style='color:"+data.color+"'>"+data.nick+'</div><br/>';
+					data.forEach(function(entry) {
+						html += "<div style='color:"+entry.color+"'>"+entry.nick+'</div><br/>';
+					});
 					$users.html(html);
 				}
 							});
