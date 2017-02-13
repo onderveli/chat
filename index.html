@@ -118,12 +118,11 @@
 				<input type="submit" value="Gönder" id="button"></input>
 			</form>
             <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/soundmanager2.js"></script>
-             <script type="text/javascript" src="http://demo.yazilimciakli.com/Files/jquery.vibrate.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
 		jQuery(function($){
-			var socket =new io.connect('https://chatheroku.herokuapp.com/');
+			var socket =new io.connect('http://chatheroku.herokuapp.com/');
 			var $nickForm = $('#setNick');
 			var $nickError = $('#nickError');
 			var $nickBox = $('#nickname');
@@ -146,7 +145,7 @@
 								document.getElementById("setNick").style.borderColor = "#8AC007";
 							 }, 3000);
 							 soundManager.play('ses','http://demo.yazilimciakli.com/Files/beep-09.wav');
-							navigator.vibrate("long");
+							
 				}
 				else
 					socket.emit('new user', $nickBox.val(), function(data){
@@ -162,7 +161,7 @@
 								document.getElementById("setNick").style.borderColor = "#8AC007";
 							 }, 3000);
 							 soundManager.play('ses','http://demo.yazilimciakli.com/Files/beep-09.wav');
-							navigator.vibrate("long");
+						
 						}
 					});
 				$nickBox.val('');
@@ -195,7 +194,7 @@
 				if($messageBox.val()==null || $messageBox.val()=="")
 				{
 					soundManager.play('ses','http://demo.yazilimciakli.com/Files/beep-09.wav');
-					navigator.vibrate("long");
+					
 					document.getElementById("send-message").style.borderColor = "#C00";
 					setTimeout(function(){
 						document.getElementById("send-message").style.borderColor = "#8AC007";
@@ -213,7 +212,7 @@
 			socket.on('new message', function(data){
 				$chat.append('<b>' + data.nick + ': </b>' + data.msg + "<br/>");
 				soundManager.play('ses','http://demo.yazilimciakli.com/Files/hangouts_message.ogg');
-				navigator.vibrate("short");
+				
 				$('#chatWrap').animate({ scrollTop: $(document).height() },1000);
 			});
 			$messageBox.keydown(function(e){
