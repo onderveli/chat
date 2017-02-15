@@ -1,15 +1,15 @@
 {
-  "name": "node-example",
-  "version": "1.0.0",
-  "description": "This example is so cool.",
-  "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "name": "socket.io-chat",
+  "version": "0.0.0",
+  "description": "A simple chat client using socket.io",
+  "main": "index.js",
+  "author": "Grant Timmerman",
+  "private": true,
+  "license": "BSD",
+  "dependencies": {
+    "express": "4.13.4"
   },
-  "keywords": [
-    "example",
-    "heroku"
-  ],
-  "author": "jane-doe",
-  "license": "MIT"
+  "scripts": {
+    "start": "node index.js"
+  }
 }
